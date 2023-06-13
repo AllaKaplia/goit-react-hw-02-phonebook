@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Form from "./Form";
 import ContactList from "./ContactsList";
 import FilterContacts from "./FilterContacts";
+import FormContact from "./Form/FormContact";
 
 class App extends Component {
   state = {
@@ -23,10 +23,15 @@ class App extends Component {
       return;
     }
 
+    this.addContact();
+  }
+
+  addContact = (contact) => {
     this.setState(prevState => ({
       contacts: [...prevState.contacts, contact],
     }));
   }
+ 
 
   changeFilter = evt => {
     this.setState({filter: evt.currentTarget.value});
@@ -49,7 +54,7 @@ class App extends Component {
     return (
       <div>
         <h1>Phonebook</h1>
-        <Form onSubmit={this.formSubmitHandle} />
+        <FormContact addContact={this.addContact}/>
         <h2>Contacts</h2>
         <FilterContacts value={filter} onChange={this.changeFilter} />
         <ContactList contacts={visibleContacts} onDeleteContact={this.deleteContact} />
