@@ -1,7 +1,14 @@
 import * as yup from 'yup';
 import { Formik, Form, ErrorMessage } from 'formik';
 import { nanoid } from 'nanoid';
-import { Input } from "./Form.styled";
+import { Input, ButtonAdd, LabelForm, ErrorText } from "./Form.styled";
+
+const ErrorError = ({ name }) => {
+  return (
+    <ErrorMessage name={name}
+    render={message => <ErrorText>{message}</ErrorText>} />
+  );
+};
 
 const schema = yup.object().shape({
   name: yup
@@ -21,7 +28,6 @@ const initialValue = {
 
 const FormContact = ({ addContact }) => {
   const handleSubmit = (values, { resetForm }) => {
-    console.log(values);
     addContact(values);
     resetForm();
   }
@@ -29,7 +35,7 @@ const FormContact = ({ addContact }) => {
   return (
     <Formik initialValues={initialValue} validationSchema={schema} onSubmit={handleSubmit}>
       <Form autoComplete='off'>
-      <label>
+      <LabelForm>
         The name of the new contact
         <Input
           type="text"
@@ -38,9 +44,9 @@ const FormContact = ({ addContact }) => {
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
         />
-        <ErrorMessage component='div' name='name' />
-      </label>
-        <label>
+        <ErrorError name='name' />
+      </LabelForm>
+        <LabelForm>
           Phone number
           <Input
             type="tel"
@@ -49,9 +55,9 @@ const FormContact = ({ addContact }) => {
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
           />
-          <ErrorMessage component='div' name='number' />
-        </label>
-        <button type="submit">Add contact</button>
+          <ErrorError name='number' />
+        </LabelForm>
+        <ButtonAdd type="submit">Add contact</ButtonAdd>
       </Form>
     </Formik>
   );
