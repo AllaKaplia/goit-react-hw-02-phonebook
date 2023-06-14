@@ -1,19 +1,19 @@
 import React from "react";
 import { nanoid } from 'nanoid';
-import css from '../FilterContacts/FilterContacts.module.css';
+import { LabelFilter, InputFilter } from "./FilterContacts.styled";
 
 const FilterContacts = ({ value, onChange }) => {
   return (
-    <label className={css.label}>
-      Filter<input
+    <LabelFilter>
+      Filter
+      <InputFilter
         type="text"
         value={value}
         id={nanoid()}
         name="filter"
         onChange={onChange} 
-        className={css.input}
       />
-    </label>
+    </LabelFilter>
   );
 }
 
