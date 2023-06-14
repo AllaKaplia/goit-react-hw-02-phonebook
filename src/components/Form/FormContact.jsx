@@ -4,9 +4,15 @@ import { nanoid } from 'nanoid';
 import { Input } from "./Form.styled";
 
 const schema = yup.object().shape({
-  name: yup.string().required(),
-  number: yup.number().min(9)
-})
+  name: yup
+    .string()
+    .matches(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/, 'Name is invalid')
+    .required('Name is required'),
+  number: yup
+    .string()
+    .matches(/^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/, 'Phone number is invalid')
+    .required('Phone number is required'),
+});
 
 const initialValue = {
   name: '',
@@ -23,17 +29,17 @@ const FormContact = ({ addContact }) => {
   return (
     <Formik initialValues={initialValue} validationSchema={schema} onSubmit={handleSubmit}>
       <Form autoComplete='off'>
-        <label>
-          The name of the new contact
-          <Input
-            type="text"
-            name="name"
-            id={nanoid()}
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-          />
-          <ErrorMessage component='div' name='name' />
-        </label>
+      <label>
+        The name of the new contact
+        <Input
+          type="text"
+          name="name"
+          id={nanoid()}
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          required
+        />
+        <ErrorMessage component='div' name='name' />
+      </label>
         <label>
           Phone number
           <Input
